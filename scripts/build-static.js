@@ -9,5 +9,10 @@ fs.copyFileSync(
   path.join(projectRoot, "index.html"),
   path.join(outputDirectory, "index.html")
 );
+fs.cpSync(
+  path.join(projectRoot, "assets"),
+  path.join(outputDirectory, "assets"),
+  { recursive: true }
+);
 
-console.log("Landing copiada para public/index.html");
+console.log("Landing e imagens copiadas para public/");
