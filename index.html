@@ -31,10 +31,10 @@ const loadMetaPixel=()=>{
   script.src='https://connect.facebook.net/en_US/fbevents.js';
   document.head.appendChild(script);
 };
-['pointerover','pointerdown','keydown','touchstart'].forEach(type=>
+['pointerdown','keydown','touchstart'].forEach(type=>
   addEventListener(type,loadMetaPixel,{once:true,passive:true})
 );
-setTimeout(loadMetaPixel,12000);
+setTimeout(loadMetaPixel,60000);
 
 const META_STANDARD_EVENTS=new Set(['PageView','ViewContent','InitiateCheckout']);
 const META_PRODUCT={
