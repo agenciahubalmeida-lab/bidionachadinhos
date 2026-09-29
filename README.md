@@ -33,3 +33,15 @@ npm.cmd run dev
 ```
 
 A Conversions API exige uma hospedagem que execute o `server.js`. Ela não funciona em uma publicação puramente estática como o GitHub Pages.
+
+### Publicar na Vercel
+
+A Vercel serve o `index.html` como arquivo estático e publica `api/meta-event.mjs` como uma Function em `/api/meta-event`.
+
+No painel do projeto, abra **Settings → Environment Variables** e cadastre:
+
+- `META_ACCESS_TOKEN`: novo token da Conversions API;
+- `META_TEST_EVENT_CODE`: opcional, somente durante testes no Gerenciador de Eventos;
+- `META_GRAPH_API_VERSION`: opcional; o padrão do projeto é `v24.0`.
+
+Não defina Build Command, Output Directory ou Install Command personalizados para este projeto. Depois de alterar as variáveis, faça um novo deploy.

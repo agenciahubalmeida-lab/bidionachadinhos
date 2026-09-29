@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "description": "Landing page Achadinhos de Leilão da Bidion",
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
-    "dev": "node server.js",
-    "start": "node server.js"
+    "dev": "node server.js"
   }
 }
