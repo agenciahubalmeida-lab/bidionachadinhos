@@ -74,8 +74,18 @@ window.trackMetaEvent=function(eventName,customData={}){
   }).catch(()=>{});
 };
 
-window.trackMetaEvent('PageView',{page_title:document.title,page_path:location.pathname});
-window.trackMetaEvent('ViewContent',META_PRODUCT);
+let initialMetaTracked=false;
+const trackInitialMeta=()=>{
+  if(initialMetaTracked)return;
+  initialMetaTracked=true;
+  window.trackMetaEvent('PageView',{page_title:document.title,page_path:location.pathname});
+  window.trackMetaEvent('ViewContent',META_PRODUCT);
+};
+['pointerdown','keydown','touchstart'].forEach(type=>
+  addEventListener(type,trackInitialMeta,{once:true,passive:true})
+);
+addEventListener('pagehide',trackInitialMeta,{once:true});
+setTimeout(trackInitialMeta,10000);
 </script>
 <!-- End Meta Pixel Code -->
 <style>
