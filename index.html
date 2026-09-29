@@ -4,6 +4,39 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Achadinhos de Leilão — Bidion</title>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1562627931838707');
+
+window.trackMetaEvent=function(eventName){
+  const eventId=(crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random()).replace(/[^a-zA-Z0-9-]/g,'');
+  const cookie=name=>document.cookie.split('; ').find(row=>row.startsWith(name+'='))?.split('=').slice(1).join('=')||'';
+  fbq('track',eventName,{}, {eventID:eventId});
+  fetch('/api/meta-event',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    keepalive:true,
+    body:JSON.stringify({
+      event_name:eventName,
+      event_id:eventId,
+      event_source_url:location.href,
+      fbp:cookie('_fbp'),
+      fbc:cookie('_fbc')
+    })
+  }).catch(()=>{});
+};
+
+window.trackMetaEvent('PageView');
+</script>
+<!-- End Meta Pixel Code -->
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Archivo+Narrow:wght@700&display=swap" rel="stylesheet">
 <style>
 :root{--or:#E8641B;--or2:#C94E0E;--ink:#111;--gr:#2B2B2B;--mut:#6b6b6b;--lt:#F3F3F1;--bd:#E4E4E0;color-scheme:light;box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -162,6 +195,8 @@ footer b{color:var(--or);font-weight:900;letter-spacing:.02em}
 </style>
 </head>
 <body>
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=1562627931838707&amp;ev=PageView&amp;noscript=1"></noscript>
 
 <header class="w" style="display:flex;justify-content:space-between;align-items:center;padding-top:16px">
   <b style="font-weight:900;letter-spacing:.04em;color:var(--or);font-size:20px">BIDION</b>
@@ -282,7 +317,10 @@ footer b{color:var(--or);font-weight:900;letter-spacing:.02em}
 
 <script>
 const CHECKOUT="https://pay.hub.la/2SRe3XJBvYw6xBPBr3Pt";
-document.querySelectorAll("[data-cta]").forEach(a=>a.href=CHECKOUT);
+document.querySelectorAll("[data-cta]").forEach(a=>{
+  a.href=CHECKOUT;
+  a.addEventListener("click",()=>window.trackMetaEvent?.("InitiateCheckout"));
+});
 
 /* ===== Lotes reais (prints de leiloeiros) — lances vistos em 28/09/2026 =====
    foto: URL da imagem (ou data:URI). link: URL do lote original. fonte: ex. leiloeiro/CAIXA/Receita Federal.
