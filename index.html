@@ -86,6 +86,7 @@ body{margin:0;background:#fff;color:var(--ink);font-family:Arial,Helvetica,syste
 h1,h2,h3,p{margin:0}
 .w{max-width:1080px;margin:0 auto;padding:0 20px}
 .sec{padding:64px 0;content-visibility:auto;contain-intrinsic-size:auto 760px}
+#deferred-root:empty{min-height:1800px}
 .h{font-weight:900;text-transform:uppercase;letter-spacing:-.02em;line-height:.98;font-size:clamp(34px,7vw,64px)}
 .o{color:var(--or)}
 .c{text-align:center}
@@ -99,6 +100,7 @@ h1,h2,h3,p{margin:0}
 .hero{padding:28px 0 56px}
 .hg{display:grid;gap:36px;align-items:center}
 @media(min-width:900px){.hg{grid-template-columns:1.15fr .85fr}}
+@media(max-width:899px){.hg>div:last-child{display:none}}
 .hero h1{font-weight:900;text-transform:uppercase;letter-spacing:-.03em;line-height:.92;font-size:clamp(46px,11vw,96px);margin:16px 0}
 .sub{font-size:clamp(18px,4.4vw,22px);font-weight:500;color:var(--gr)}
 .sub b{background:var(--or);color:#fff;padding:0 6px;border-radius:4px}
@@ -250,18 +252,19 @@ src="https://www.facebook.com/tr?id=1562627931838707&amp;ev=PageView&amp;noscrip
     <div class="cats"><span>🚗 CARROS</span><span>🏠 IMÓVEIS</span><span>📱 IPHONES</span><span>💻 ELETRÔNICOS</span><span>💎 JOIAS</span><span>+ MUITO MAIS</span></div>
     <div class="price"><div><small>3 MESES DE ACESSO</small><span class="n">R$27</span></div><div style="font-weight:900;text-transform:uppercase;line-height:1.1">Pagamento<br>único</div></div>
     <p class="fine">Acesso imediato ao grupo fechado.</p>
-    <a class="btn" data-cta href="#">Quero receber os achadinhos →</a>
+<a class="btn" data-cta href="https://pay.hub.la/2SRe3XJBvYw6xBPBr3Pt">Quero receber os achadinhos →</a>
     <div class="chk"><span>Pagamento único</span><span>3 meses de acesso</span><span>Direto no WhatsApp</span></div>
   </div>
   <div>
     <div class="phone"><div class="scr">
       <div class="wh"><i>B</i><div>Achadinhos de Leilão<small>grupo fechado · online</small></div></div>
-      <div class="msgs" id="msgs"><div class="m"><div class="ph"><img src="/assets/lote-1.jpg" alt="Chevrolet Onix 1.0 LT2 manual, 2021/2021" width="640" height="480" decoding="async" fetchpriority="high"></div><b>🔥 NOVO ACHADINHO</b><strong>Chevrolet Onix 1.0 LT2 manual, 2021/2021</strong><br>FIPE (ref.): ≈ R$ 59.196<br>Maior lance: R$ 28.000,00<br><em>≈ 52% abaixo da FIPE</em><u>09:41</u></div></div>
+      <div class="msgs" id="msgs"><div class="m"><div class="ph"><img src="/assets/lote-1.jpg" alt="Chevrolet Onix 1.0 LT2 manual, 2021/2021" width="640" height="480" decoding="async" loading="lazy"></div><b>🔥 NOVO ACHADINHO</b><strong>Chevrolet Onix 1.0 LT2 manual, 2021/2021</strong><br>FIPE (ref.): ≈ R$ 59.196<br>Maior lance: R$ 28.000,00<br><em>≈ 52% abaixo da FIPE</em><u>09:41</u></div></div>
     </div></div>
   </div>
 </div>
 </section>
 
+<template id="deferred-content">
 <section class="sec prob c">
 <div class="w">
   <h2 class="h">Você provavelmente está pagando mais caro do que precisa.</h2>
@@ -277,7 +280,7 @@ src="https://www.facebook.com/tr?id=1562627931838707&amp;ev=PageView&amp;noscrip
   <div class="grid" id="grid"></div>
   <p class="fn">Lotes reais de exemplo. Os lances são os vistos em 28/09/2026 e mudam até o encerramento; o valor final pode ser diferente. Referências de mercado: FIPE, lojas e sites oficiais pesquisados em set/2026; "≈" indica valor aproximado ou de modelo equivalente.</p>
   <p class="note">Você não precisa procurar nada. A gente manda.</p>
-  <div class="cta"><a class="btn" data-cta href="#">Quero receber essas oportunidades →</a></div>
+<div class="cta"><a class="btn" data-cta href="https://pay.hub.la/2SRe3XJBvYw6xBPBr3Pt">Quero receber essas oportunidades →</a></div>
 </div>
 </section>
 
@@ -332,7 +335,7 @@ src="https://www.facebook.com/tr?id=1562627931838707&amp;ev=PageView&amp;noscrip
     <div class="lbl">Pagamento único</div>
     <span class="pm">Isso dá apenas R$9 por mês.</span>
     <p>Uma única oportunidade encontrada pode fazer esses R$27 parecerem ridículos.</p>
-    <div class="cta" style="margin-top:26px"><a class="btn" data-cta href="#">Sim, quero entrar no grupo →</a></div>
+<div class="cta" style="margin-top:26px"><a class="btn" data-cta href="https://pay.hub.la/2SRe3XJBvYw6xBPBr3Pt">Sim, quero entrar no grupo →</a></div>
   </div>
 </div>
 </section>
@@ -347,14 +350,16 @@ src="https://www.facebook.com/tr?id=1562627931838707&amp;ev=PageView&amp;noscrip
   <p class="sub2">Ou começar a ver o que está aparecendo nos leilões.</p>
   <div class="list"><span>🔥 Achadinhos novos todos os dias</span><span>📲 Direto no WhatsApp</span><span>🇧🇷 Todo o Brasil</span></div>
   <div class="pz2"><small>3 meses de acesso</small><b>R$27</b><small>Pagamento único</small></div>
-  <div class="cta" style="margin-top:0"><a class="btn" data-cta href="#">Quero meu acesso agora →</a></div>
+<div class="cta" style="margin-top:0"><a class="btn" data-cta href="https://pay.hub.la/2SRe3XJBvYw6xBPBr3Pt">Quero meu acesso agora →</a></div>
 </div>
 </section>
+</template>
+<div id="deferred-root"></div>
 </main>
 
 <footer><b>BIDION</b> · Achadinhos de Leilão</footer>
 
-<div class="stk" id="stk"><div>3 meses por <span>R$27</span></div><a data-cta href="#">ENTRAR AGORA</a></div>
+<div class="stk" id="stk"><div>3 meses por <span>R$27</span></div><a data-cta href="https://pay.hub.la/2SRe3XJBvYw6xBPBr3Pt">ENTRAR AGORA</a></div>
 
 <script>
 const CHECKOUT="https://pay.hub.la/2SRe3XJBvYw6xBPBr3Pt";
@@ -363,14 +368,19 @@ const campaignParams=new URLSearchParams(location.search);
 campaignParams.forEach((value,key)=>{
   if(key.startsWith("utm_")||["fbclid","src","sck"].includes(key))checkoutUrl.searchParams.set(key,value);
 });
-document.querySelectorAll("[data-cta]").forEach((a,index)=>{
+let ctaPosition=0;
+const wireCtas=(root=document)=>root.querySelectorAll("[data-cta]").forEach(a=>{
+  if(a.dataset.ctaReady)return;
+  a.dataset.ctaReady="true";
+  const position=++ctaPosition;
   a.href=checkoutUrl.toString();
   a.addEventListener("click",()=>window.trackMetaEvent?.("CheckoutClick",{
     ...META_PRODUCT,
-    cta_position:index+1,
+    cta_position:position,
     cta_text:a.textContent.trim().slice(0,100)
   }));
 });
+wireCtas();
 
 const trackedScrollDepths=new Set();
 let userScrollStarted=false;
@@ -403,10 +413,22 @@ addEventListener("scroll",()=>{
 const LOTES=[{"cat":"Veículo","nome":"Chevrolet Onix 1.0 LT2 manual, 2021/2021","tit":"🔥 NOVO ACHADINHO","refL":"FIPE (ref.)","ref":"≈ R$ 59.196","leL":"Maior lance","leilao":"R$ 28.000,00","pct":"≈ 52% abaixo da FIPE","fonte":"Freitas Leiloeiro · Safra","link":"","foto":"/assets/lote-1.jpg"},{"cat":"Imóvel","nome":"Apartamento — Cordovil, Rio de Janeiro/RJ","tit":"🏠 ACHADINHO DE IMÓVEL","refL":"Avaliação (implícita)","ref":"≈ R$ 96.000","leL":"Lance mínimo","leilao":"R$ 24.000,00","pct":"75% de desconto","fonte":"Freitas Leiloeiro · Bradesco","link":"","foto":"/assets/lote-2.jpg"},{"cat":"Celular","nome":"iPhone 17 Pro 1TB — Laranja-cósmico","tit":"📱 ACHADINHO","refL":"Varejo (menor preço)","ref":"R$ 11.299","leL":"Lance inicial","leilao":"R$ 5.175,00","pct":"≈ 54% abaixo do varejo","fonte":"Leiloeiro Osmar Campos Vicente Marques","link":"","foto":"/assets/lote-3.jpg"},{"cat":"Notebooks","nome":"Lote com 3 notebooks Lenovo ThinkPad T480 (i7, 16GB)","tit":"💻 ACHADINHO","refL":"Mercado estimado (3 un.)","ref":"≈ R$ 5.700","leL":"Maior lance","leilao":"R$ 1.650,00","pct":"≈ 71% abaixo da estimativa","fonte":"Freitas Leiloeiro · Bradesco","link":"","foto":"/assets/lote-4.jpg"},{"cat":"TV","nome":"Smart TV TCL LED 65\" UHD 4K","tit":"📺 ACHADINHO","refL":"Varejo (TCL 65\" 4K similar)","ref":"≈ R$ 3.419","leL":"Maior lance","leilao":"R$ 1.580,00","pct":"≈ 54% abaixo do varejo","fonte":"Freitas Leiloeiro","link":"","foto":"/assets/lote-5.jpg"},{"cat":"TV","nome":"Televisor LG 50\" 50NANO79SND.AWZ","tit":"📺 ACHADINHO","refL":"Valor de mercado","ref":"R$ 4.452,00","leL":"Valor atual","leilao":"R$ 425,00","pct":"90% OFF (segundo o leilão)","fonte":"Leilão online — Taboão da Serra/SP","link":"","foto":"/assets/lote-6.jpg"},{"cat":"Eletrodoméstico","nome":"Geladeira Midea Duplex 425L Inox MD-RT572EVD462","tit":"🧊 ACHADINHO","refL":"Preço de lista Midea","ref":"R$ 3.899,00","leL":"Lance inicial","leilao":"R$ 1.171,06","pct":"≈ 70% abaixo do preço de lista","fonte":"Leiloeira Tarcila Ferro Campos Marques","link":"","foto":"/assets/lote-7.jpg"},{"cat":"Tablet","nome":"iPad 10ª geração Wi-Fi 64GB + Apple Pencil 2ª geração","tit":"📱 ACHADINHO","refL":"Lista Apple (iPad + Pencil)","ref":"≈ R$ 5.498","leL":"Último lance","leilao":"R$ 2.000,00","pct":"≈ 64% abaixo (no estado, sem garantia)","fonte":"Leilão online — lote no estado e sem garantia","link":"","foto":"/assets/lote-8.jpg"},{"cat":"Imóvel","nome":"Apartamento 55 m², 2 quartos — Vila Mackenzie, Jaguaré/SP","tit":"🏠 ACHADINHO DE IMÓVEL","refL":"Avaliação estimada","ref":"≈ R$ 450.000","leL":"Valor do leilão","leilao":"R$ 270.099,09","pct":"≈ 40% abaixo da estimativa","fonte":"Leilão SFI","link":"","foto":"/assets/lote-9.jpg"}];
 const T=(v,d)=>v||'<i class="todo">'+(d||'preencher')+'</i>';
 const ph=(l,i,eager=false)=>'<div class="ph" data-i="'+i+'">'+(l.foto?'<img src="'+l.foto+'" alt="'+l.nome+'" width="640" height="480" decoding="async" loading="'+(eager?'eager':'lazy')+'"'+(eager?' fetchpriority="high"':'')+'>':'<span class="pht">FOTO REAL DO LOTE<small>'+l.dica+'<br>clique p/ pré-visualizar</small></span><img alt="" hidden><input type="file" accept="image/*" hidden>')+'</div>';
+let moreRevealed=false;
+const revealMore=()=>{
+  if(moreRevealed)return;
+  moreRevealed=true;
+  const template=document.getElementById("deferred-content");
+  const root=document.getElementById("deferred-root");
+  root.append(template.content);
+  wireCtas(root);
+};
+let gridRendered=false;
 const renderGrid=()=>{
+  revealMore();
+  if(gridRendered)return;
+  gridRendered=true;
   document.getElementById("grid").innerHTML=LOTES.map((l,i)=>'<article class="lot">'+ph(l,i)+'<div class="lb"><span class="cat">'+l.cat+'</span><h3>'+l.nome+'</h3><div class="row"><span>'+l.refL+'</span><s>'+T(l.ref,'R$ —')+'</s></div><div class="row"><span>'+(l.leL||'Leilão')+'</span><strong>'+T(l.leilao,'R$ —')+'</strong></div><span class="tag">'+(l.pct||'% a preencher')+'</span><div class="src"><span>Fonte: '+T(l.fonte,'leiloeiro')+'</span>'+(l.link?'<a href="'+l.link+'" target="_blank" rel="noopener">Ver lote original ↗</a>':'')+'</div></div></article>').join("");
 };
-const grid=document.getElementById("grid");
 const revealGrid=()=>{
   renderGrid();
 };
