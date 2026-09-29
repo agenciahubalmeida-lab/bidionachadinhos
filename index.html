@@ -16,10 +16,28 @@ s.parentNode.insertBefore(t,s)}(window,document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','1562627931838707');
 
-window.trackMetaEvent=function(eventName){
-  const eventId=(crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random()).replace(/[^a-zA-Z0-9-]/g,'');
-  const cookie=name=>document.cookie.split('; ').find(row=>row.startsWith(name+'='))?.split('=').slice(1).join('=')||'';
-  fbq('track',eventName,{}, {eventID:eventId});
+const META_STANDARD_EVENTS=new Set(['PageView','ViewContent','InitiateCheckout']);
+const META_PRODUCT={
+  content_name:'Achadinhos de Leilão - 3 meses',
+  content_type:'product',
+  content_ids:['achadinhos-3-meses'],
+  contents:[{id:'achadinhos-3-meses',quantity:1,item_price:27}],
+  currency:'BRL',
+  value:27
+};
+const metaCookie=name=>document.cookie.split('; ').find(row=>row.startsWith(name+'='))?.split('=').slice(1).join('=')||'';
+let metaExternalId=metaCookie('bidion_uid');
+if(!metaExternalId){
+  metaExternalId=(globalThis.crypto?.randomUUID?.()||Date.now()+'-'+Math.random()).replace(/[^a-zA-Z0-9-]/g,'');
+  document.cookie='bidion_uid='+metaExternalId+'; Max-Age=31536000; Path=/; SameSite=Lax'+(location.protocol==='https:'?'; Secure':'');
+}
+
+window.trackMetaEvent=function(eventName,customData={}){
+  const eventId=(globalThis.crypto?.randomUUID?.()||Date.now()+'-'+Math.random()).replace(/[^a-zA-Z0-9-]/g,'');
+  const pixelMethod=META_STANDARD_EVENTS.has(eventName)?'track':'trackCustom';
+  fbq(pixelMethod,eventName,customData,{eventID:eventId});
+  const fbclid=new URLSearchParams(location.search).get('fbclid')||'';
+  const fbc=metaCookie('_fbc')||(fbclid?'fb.1.'+Date.now()+'.'+fbclid:'');
   fetch('/api/meta-event',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
@@ -28,13 +46,16 @@ window.trackMetaEvent=function(eventName){
       event_name:eventName,
       event_id:eventId,
       event_source_url:location.href,
-      fbp:cookie('_fbp'),
-      fbc:cookie('_fbc')
+      custom_data:customData,
+      external_id:metaExternalId,
+      fbp:metaCookie('_fbp'),
+      fbc
     })
   }).catch(()=>{});
 };
 
-window.trackMetaEvent('PageView');
+window.trackMetaEvent('PageView',{page_title:document.title,page_path:location.pathname});
+window.trackMetaEvent('ViewContent',META_PRODUCT);
 </script>
 <!-- End Meta Pixel Code -->
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Archivo+Narrow:wght@700&display=swap" rel="stylesheet">
@@ -317,10 +338,36 @@ src="https://www.facebook.com/tr?id=1562627931838707&amp;ev=PageView&amp;noscrip
 
 <script>
 const CHECKOUT="https://pay.hub.la/2SRe3XJBvYw6xBPBr3Pt";
-document.querySelectorAll("[data-cta]").forEach(a=>{
-  a.href=CHECKOUT;
-  a.addEventListener("click",()=>window.trackMetaEvent?.("InitiateCheckout"));
+const checkoutUrl=new URL(CHECKOUT);
+const campaignParams=new URLSearchParams(location.search);
+campaignParams.forEach((value,key)=>{
+  if(key.startsWith("utm_")||["fbclid","src","sck"].includes(key))checkoutUrl.searchParams.set(key,value);
 });
+document.querySelectorAll("[data-cta]").forEach((a,index)=>{
+  a.href=checkoutUrl.toString();
+  a.addEventListener("click",()=>window.trackMetaEvent?.("CheckoutClick",{
+    ...META_PRODUCT,
+    cta_position:index+1,
+    cta_text:a.textContent.trim().slice(0,100)
+  }));
+});
+
+const trackedScrollDepths=new Set();
+addEventListener("scroll",()=>{
+  const scrollable=document.documentElement.scrollHeight-innerHeight;
+  if(scrollable<=0)return;
+  const depth=Math.round(scrollY/scrollable*100);
+  [25,50,75,90].forEach(mark=>{
+    if(depth>=mark&&!trackedScrollDepths.has(mark)){
+      trackedScrollDepths.add(mark);
+      window.trackMetaEvent?.("ScrollDepth",{scroll_depth:mark});
+    }
+  });
+},{passive:true});
+
+[30,60,120].forEach(seconds=>setTimeout(()=>{
+  if(document.visibilityState==="visible")window.trackMetaEvent?.("TimeOnPage",{time_seconds:seconds});
+},seconds*1000));
 
 /* ===== Lotes reais (prints de leiloeiros) — lances vistos em 28/09/2026 =====
    foto: URL da imagem (ou data:URI). link: URL do lote original. fonte: ex. leiloeiro/CAIXA/Receita Federal.

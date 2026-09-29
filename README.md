@@ -20,7 +20,7 @@ npm run dev
 
 ## Meta Pixel e Conversions API
 
-O Pixel `1562627931838707` registra `PageView` e `InitiateCheckout` no navegador. O servidor envia os mesmos eventos pela Conversions API usando o mesmo `event_id`, permitindo a deduplicação pela Meta.
+O Pixel `1562627931838707` registra `PageView`, `ViewContent`, `CheckoutClick`, profundidade de rolagem e tempo de permanência. O servidor envia os mesmos eventos pela Conversions API usando o mesmo `event_id`, permitindo a deduplicação pela Meta. UTMs e `fbclid` são preservados no redirecionamento para o checkout. A Hubla registra `InitiateCheckout`, `AddToCart` e `Purchase` dentro do checkout.
 
 Cadastre o token como segredo `META_ACCESS_TOKEN` no ambiente da hospedagem. Não coloque o token no HTML, no repositório ou em arquivos `.env` versionados. As opções disponíveis estão documentadas em `.env.example`.
 

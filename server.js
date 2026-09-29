@@ -1,13 +1,21 @@
 const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
+const { createHash } = require("node:crypto");
 
 const host = "127.0.0.1";
 const port = Number(process.env.PORT) || 3000;
 const root = __dirname;
 const metaPixelId = "1562627931838707";
 const metaGraphApiVersion = process.env.META_GRAPH_API_VERSION || "v24.0";
-const allowedMetaEvents = new Set(["PageView", "InitiateCheckout"]);
+const allowedMetaEvents = new Set([
+  "PageView",
+  "ViewContent",
+  "InitiateCheckout",
+  "CheckoutClick",
+  "ScrollDepth",
+  "TimeOnPage"
+]);
 
 const contentTypes = {
   ".css": "text/css; charset=utf-8",
@@ -57,6 +65,42 @@ function boundedString(value, maxLength) {
   return typeof value === "string" ? value.slice(0, maxLength) : "";
 }
 
+function sha256(value) {
+  return createHash("sha256").update(value.trim().toLowerCase()).digest("hex");
+}
+
+function sanitizeCustomData(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+
+  const output = {};
+  const stringKeys = ["content_name", "content_type", "currency", "cta_text", "page_path", "page_title"];
+  const numberKeys = ["cta_position", "scroll_depth", "time_seconds", "value"];
+
+  for (const key of stringKeys) {
+    const item = boundedString(value[key], key === "currency" ? 3 : 256);
+    if (item) output[key] = item;
+  }
+
+  for (const key of numberKeys) {
+    const item = Number(value[key]);
+    if (Number.isFinite(item)) output[key] = item;
+  }
+
+  if (Array.isArray(value.content_ids)) {
+    output.content_ids = value.content_ids.slice(0, 20).map(item => boundedString(item, 128)).filter(Boolean);
+  }
+
+  if (Array.isArray(value.contents)) {
+    output.contents = value.contents.slice(0, 20).map(item => ({
+      id: boundedString(item?.id, 128),
+      quantity: Number.isFinite(Number(item?.quantity)) ? Number(item.quantity) : 1,
+      item_price: Number.isFinite(Number(item?.item_price)) ? Number(item.item_price) : undefined
+    })).filter(item => item.id);
+  }
+
+  return output;
+}
+
 async function handleMetaEvent(request, response) {
   const accessToken = process.env.META_ACCESS_TOKEN;
 
@@ -90,9 +134,13 @@ async function handleMetaEvent(request, response) {
   };
   const fbp = boundedString(input.fbp, 256);
   const fbc = boundedString(input.fbc, 256);
+  const externalId = boundedString(input.external_id, 256);
 
   if (fbp) userData.fbp = fbp;
   if (fbc) userData.fbc = fbc;
+  if (externalId) userData.external_id = [sha256(externalId)];
+
+  const customData = sanitizeCustomData(input.custom_data);
 
   const metaPayload = {
     data: [{
@@ -101,7 +149,8 @@ async function handleMetaEvent(request, response) {
       event_id: eventId,
       action_source: "website",
       event_source_url: boundedString(input.event_source_url, 2048),
-      user_data: userData
+      user_data: userData,
+      ...(Object.keys(customData).length ? { custom_data: customData } : {})
     }]
   };
 
